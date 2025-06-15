@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Math Solver with Sign-In/Sign-Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" id="student-link" style="display: none;">Student</a>
+            <a href="#" id="teacher-link" style="display: none;">Teacher</a>
+            <a href="help.html">Help</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Professional Math Solver</h1>
+            <p>Your all-in-one solution for learning and solving math problems.</p>
+            <button onclick="scrollToSign()">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Sign-Up/Sign-In Section -->
+    <section id="sign-section">
+        <div class="container">
+            <h2>Sign In</h2>
+            <form id="signin-form">
+                <input type="email" id="signin-email" placeholder="Enter your email" required>
+                <input type="password" id="signin-password" placeholder="Enter your password" required>
+                <button type="button" id="signin-button">Sign In</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="signup-link">Sign Up Here</a></p>
+
+            <div id="signup-section" style="display:none;">
+                <h2>Sign Up</h2>
+                <form id="signup-form">
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    <input type="password" id="signup-password" placeholder="Enter your password" required>
+                    <button type="button" id="signup-button">Sign Up</button>
+                </form>
+            </div>
+        </div>
+        <p id="message"></p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container">
+        <h2>Features</h2>
+        <ul>
+            <li>Input math problems and receive step-by-step solutions.</li>
+            <li>Generate interactive graphs for mathematical equations.</li>
+            <li>View and save recent queries and solutions.</li>
+        </ul>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Locana Naidu Developer . All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Simulate user login status
+        const isLoggedIn = false;
+
+        if (isLoggedIn) {
+            document.getElementById('student-link').style.display = 'inline';
+            document.getElementById('teacher-link').style.display = 'inline';
+        }
+
+        // Scroll-to-Sign Section
+        function scrollToSign() {
+            document.getElementById('sign-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Toggle between Sign-In and Sign-Up forms
+        const signupLink = document.getElementById("signup-link");
+        const signinForm = document.getElementById("signin-form");
+        const signupForm = document.getElementById("signup-form");
+        const signupSection = document.getElementById("signup-section");
+
+        signupLink.addEventListener("click", () => {
+            signinForm.style.display = "none";
+            signupSection.style.display = "block";
+        });
+    </script>
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAo8JQGpnXp2o4LPGqO_mkNHJTm-ABs59E",
+            authDomain: "professional-math-solver.firebaseapp.com",
+            projectId: "professional-math-solver",
+            storageBucket: "professional-math-solver.appspot.com",
+            messagingSenderId: "581138256194",
+            appId: "1:581138256194:web:af456ffe60ae0784ad38db"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Sign-Up Function
+        document.getElementById("signup-button").addEventListener("click", () => {
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-password").value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert("Sign-up successful!");
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        });
+
+        // Sign-In Function
+        document.getElementById("signin-button").addEventListener("click", () => {
+            const email = document.getElementById("signin-email").value;
+            const password = document.getElementById("signin-password").value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert("Sign-in successful!");
+                    window.location.href = "student.html";
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
